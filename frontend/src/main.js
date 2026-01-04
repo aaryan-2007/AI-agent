@@ -10,6 +10,7 @@ await clerk.load()
 
 if (!clerk.user) {
   document.querySelector('.login-btn').onclick = () => clerk.openSignIn()
+  document.getElementById('menuToggle').style.display = 'none';
   
 } else {
 
@@ -19,8 +20,9 @@ if (!clerk.user) {
   document.querySelector('.login-btn').innerHTML = 
   `
   <div class="user-area">
-    <div id=user-button></div>
-  </div>`
+    <div id="user-button"></div>
+  </div>
+  `
 
   //Now mount user icon
   const userBtn = document.getElementById('user-button');
@@ -28,6 +30,20 @@ if (!clerk.user) {
 
   document.querySelector('.greeting h1').innerHTML = 
   `<span class="status-dot"></span>Hi ${clerk.user.fullName}`
+
+  document.querySelector('.user-profile').innerHTML =
+  `
+    <div class="footer-icon user-icon">
+    <img src="${clerk.user.imageUrl}" alt="User Profile" class="user-avatar" />
+    </div>
+    <span id="user-fullname">${clerk.user.fullName}</span>
+  `
+
+  document.getElementById('menuToggle').style.display = 'flex';
+  document.querySelector('.user-profile').addEventListener('click', () => { clerk.openUserProfile(); });
+  const userBtn1 = document.getElementById('user-button1');
+  
+  clerk.mountUserButton(userBtn1);
 }
 
 // save function
